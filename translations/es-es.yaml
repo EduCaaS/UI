@@ -981,6 +981,7 @@ stacksPage:
     user: Montones del Usuario
     system: Montones del Sistema
   actionButton: Añadir Montón
+  catalogButton: Añadir App
   sort:
     label: Sort By
     state: State
