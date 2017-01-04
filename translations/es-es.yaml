@@ -308,6 +308,8 @@ backupTargetsPage:
 catalogPage:
   index:
     header: 'Catálogo:'
+    action:
+      launch: Instalar
     search:
       placeholder: Buscar...
     category: "Categoría:"
@@ -2479,7 +2481,7 @@ newCatalog:
   version:
     prompt: Choose a version...
   saveUpgrade: Actualizar
-  saveNew: Launch
+  saveNew: Instalar
   upgrade: "Actualización:"
   catalog: "Catálogo:"
   category: "Categoría:"
@@ -2489,13 +2491,14 @@ newCatalog:
   maintainer: "Maintainer:"
   license: "Licencia:"
   url: "URL del proyecto:"
+  titleAdd: "Añadir {name}"
   stack: Montón
   templateVersion: Template Version
-  selectVersion: Select a version of the template to
+  selectVersionAdd: Selecciona una versión de la plantilla
   newStack: Nuevo Montón
-  config: Configuration Options
+  config: Configuración
   unknownType: "Unrecognized question type:"
-  startService: Start services after creating
+  startService: Arrancar tras la instalación
   preview: Preview
   txt: answers.txt
   noConfig: This template has no configuration options
@@ -2774,6 +2777,7 @@ nav:
     your: Tus Entornos
     selected: Entorno Seleccionado
     manage: Gestionar Entornos
+    edit: 'Editar "{name}"'
   namespace:
     label: Namespace
     manage: Manage Namespaces
@@ -2804,6 +2808,7 @@ nav:
     tab: Catálogo
     all: Todos
     library: Library
+    community: Community
   infra:
     tab: Infraestructura
     hosts: Servidores
