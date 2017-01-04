@@ -227,6 +227,17 @@ const navTree = [
     submenu: getStacksSubtree,
   },
 
+  // MOOC
+  {
+    id: 'mooc',
+    localizedLabel: 'nav.mooc.tab',
+    icon: 'icon icon-terminal',
+    url: 'http://openedx.educaas.io',
+    target: '_blank',
+    ctx: [getProjectId],
+     condition: function() { return this.get('hasProject'); },
+  },
+
   // Catalog
   {
     id: 'catalog',
@@ -377,16 +388,7 @@ const navTree = [
     ctx: [getProjectId],
     condition: function() { return this.get('hasProject') && this.get('isAdmin'); },
   },
-  // MOOC
-  {
-    id: 'mooc',
-    localizedLabel: 'nav.mooc.tab',
-    icon: 'icon icon-terminal',
-    url: 'http://mooc.fricolab.com',
-    target: '_blank',
-    ctx: [getProjectId],
-     condition: function() { return this.get('hasProject'); },
-  },
+
   // EduCaaS UI
 /*
   {

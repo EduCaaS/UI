@@ -7,7 +7,7 @@
     {{#link-to "catalog-tab" projects.current.id (query-params catalogId="all" templateBase="infra") classNames="btn btn-sm btn-primary"}}{{t 'stacksPage.catalogButton'}}{{/link-to}}
   {{else}}
     {{#if arranged.length}}
-      {{#link-to "catalog-tab" projects.current.id (query-params catalogId="all") classNames="btn btn-sm btn-primary"}}{{t 'stacksPage.catalogButton'}}{{/link-to}}
+      {{#link-to "catalog-tab" projects.current.id (query-params catalogId="EduCaaS") classNames="btn btn-sm btn-primary"}}{{t 'stacksPage.catalogButton'}}{{/link-to}}
     {{/if}}
   {{/if}}
 
@@ -37,5 +37,3 @@
 </section>
 
 {{service-addtl-info service=selectedService dismiss='dismiss' show=showAddtlInfo}}
-
-

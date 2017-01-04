@@ -9,14 +9,14 @@ const {
   constructUrl
 } = Util;
 
-const iconUrl = 'https://upload.wikimedia.org/wikipedia/commons/a/a6/AWS_Simple_Icons_Deployment_Management_AWS_CloudFormation_Stack.svg';
+// const iconUrl = 'https://upload.wikimedia.org/wikipedia/commons/a/a6/AWS_Simple_Icons_Deployment_Management_AWS_CloudFormation_Stack.svg';
 
 export default Ember.Component.extend({
-  iconUrl,
+  //iconUrl,
 
-  publicLink: computed('model.services.firstObject.endpointsMap', function(){
+  publicLink: computed('model.services.lastObject.endpointsMap', function(){
     let services = this.get('model.services').filterBy('publicEndpoints');
-    let endpoints = services.get('firstObject.endpointsMap') || {};
+    let endpoints = services.get('lastObject.endpointsMap') || {};
     let ports = Object.keys(endpoints);
     if (ports.length > 0) {
       let [ port ] = ports;
