@@ -155,7 +155,7 @@ var C = {
   },
 
   LANGUAGE: {
-    DEFAULT: 'en-us',
+    DEFAULT: 'es-es',
     FORMAT_RELATIVE_TIMEOUT: 1000,
     DOCS: ['en'],
   },
