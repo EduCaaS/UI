@@ -6,7 +6,7 @@ export function initialize(application ) {
     application.needIntlPolyfill = true;
     application.deferReadiness();
     loadScript(application.baseAssets+'assets/intl/intl.min.js').then(() => {
-      return loadScript(application.baseAssets+'assets/intl/locales/es-es.js');
+      return loadScript(application.baseAssets+'assets/intl/locales/en-us.js');
     }).finally(() => {
       application.advanceReadiness();
     });
