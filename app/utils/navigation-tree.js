@@ -167,6 +167,16 @@ const navTree = [
     submenu: getStacksSubtree,
   },
 
+  // MOOC added by EduCaaS
+  {
+    id: 'mooc',
+    localizedLabel: 'nav.mooc.tab',
+    icon: 'icon icon-terminal',
+    url: 'http://openedx.educaas.io',
+    taret: '_blank',
+    ctx: [getProjectId],
+    condition: function() { return this.get('hasProject'); }
+  },
   // Catalog
   {
     id: 'catalog',
@@ -211,7 +221,7 @@ const navTree = [
         icon: 'icon icon-vm',
         route: 'virtualmachines',
         ctx: [getProjectId],
-        condition: function() { return this.get('hasVm'); },
+        condition: function() { return this.get('hasVm') && this.get('isAdmin'); },
       },
       {
         id: 'infra-storagepools',
@@ -219,6 +229,7 @@ const navTree = [
         icon: 'icon icon-hdd',
         route: 'storagepools',
         ctx: [getProjectId],
+        condition: function() { return this.get('isAdmin'); },
       },
       {
         id: 'infra-secrets',
@@ -226,6 +237,7 @@ const navTree = [
         icon: 'icon icon-secrets',
         route: 'secrets',
         ctx: [getProjectId],
+        condition: function() { return this.get('isAdmin'); },
       },
       /*
       {
@@ -243,6 +255,7 @@ const navTree = [
         icon: 'icon icon-certificate',
         route: 'certificates',
         ctx: [getProjectId],
+        condition: function() { return this.get('isAdmin'); },
       },
       {
         id: 'infra-registries',
@@ -250,6 +263,7 @@ const navTree = [
         icon: 'icon icon-database',
         route: 'registries',
         ctx: [getProjectId],
+        condition: function() { return this.get('isAdmin'); },
       },
     ],
   },
@@ -320,7 +334,7 @@ const navTree = [
     icon: 'icon icon-terminal',
     route: 'authenticated.project.api.keys',
     ctx: [getProjectId],
-    condition: function() { return this.get('hasProject'); },
+    condition: function() { return this.get('hasProject') && this.get('isAdmin'); },
     submenu: [
       {
         id: 'api-keys',

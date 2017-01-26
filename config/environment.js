@@ -85,8 +85,8 @@ module.exports = function(environment) {
       // Here you can pass flags/options to your application instance
       // when it is created
       version: pkg.version,
-      appName: 'Rancher',
-      apiServer: 'http://localhost:8080',
+      appName: 'EduCaaS', // EduCaaS name
+      apiServer: 'http://wip.educaas.io', // EduCaaS API endpoint
       legacyApiEndpoint: '/v1',
       apiEndpoint: '/v2-beta',
       catalogServer: '',

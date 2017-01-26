@@ -224,6 +224,15 @@ var Stack = Resource.extend({
       return C.EXTERNAL_ID.KIND_USER;
     }
   }.property('externalIdInfo.kind','group','system'),
+  // FIXMe
+  // EduCaaS modification in order to set catalog icon as stack card icon.
+  // I do not have control about what is in the backend. This is the best I can
+  // do with the data I have.
+  urlImage: function() {
+    let baseUrl = `${this.get('app.catalogEndpoint')}/templates/`;
+    let catalogRef = this.get('externalId').split('//')[1].split(':', 2).join(':');
+    return `${baseUrl}${catalogRef}?image`;
+    }.property('externalId', 'app.catalogEndpoint'),
 
   tags: Ember.computed('group', {
     get() {

@@ -3,7 +3,7 @@ $body-bg                             : #ecf0f1;
 //** Global text color on `<body>`.
 $text-color                          : #2c3e50;
 
-$brand-primary                       : $blue; //button non state
+$brand-primary                       : $primary; //button non state
 $brand-primary-dark                  : darken($brand-primary, 20%);
 
 //states
@@ -54,7 +54,7 @@ $table-bg-active                     : $table-bg-hover;
 //** Border color for table and cell borders.
 $table-border-color                  : $lightGray;
 
-/*ButtonsFor each of Bootstrap's buttons, define text, background and border color.*/ 
+/*ButtonsFor each of Bootstrap's buttons, define text, background and border color.*/
 $btn-default-color                   : $midGray;
 $btn-default-bg                      : white;
 $btn-default-border                  : $lightGray;

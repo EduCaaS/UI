@@ -190,7 +190,7 @@ var C = {
   },
 
   LANGUAGE: {
-    DEFAULT: 'en-us',
+    DEFAULT: 'es-es',
     FORMAT_RELATIVE_TIMEOUT: 1000,
     DOCS: ['en'],
   },
@@ -305,10 +305,10 @@ var C = {
 
   EXT_REFERENCES: {
     FORUM: 'https://forums.rancher.com',
-    COMPANY: 'http://rancher.com',
-    GITHUB: 'https://github.com/rancher/rancher',
+    COMPANY: 'http://educaas.io',
+    GITHUB: 'https://github.com/educaas/ui',
     DOCS: 'http://docs.rancher.com/rancher',
-    SLACK: 'https://slack.rancher.io',
+    SLACK: 'https://educaas.slack.com',
   },
 
   K8S: {
