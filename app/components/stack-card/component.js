@@ -14,7 +14,10 @@ const {
 
 export default Ember.Component.extend({
 
+  access: Ember.inject.service(),
+
   //iconUrl,
+
   publicLink: computed('model.services.lastObject.endpointsMap', function(){
     let services = this.get('model.services').filterBy('publicEndpoints');
     let endpoints = services.get('lastObject.endpointsMap') || {};
@@ -26,6 +29,6 @@ export default Ember.Component.extend({
       return constructUrl(false, ip, port);
     }
   }),
-  access: Ember.inject.service(),
+
   isAdmin: Ember.computed.alias('access.admin')
 });
