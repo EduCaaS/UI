@@ -1,6 +1,7 @@
 // Stack Card component. Added by EduCaaS
 import Ember from 'ember';
 import Util from 'ui/utils/util';
+import C from 'ui/utils/constants';
 
 const {
   computed,
@@ -10,8 +11,11 @@ const {
   constructUrl
 } = Util;
 
+//const iconUrl = 'https://upload.wikimedia.org/wikipedia/commons/a/a6/AWS_Simple_Icons_Deployment_Management_AWS_CloudFormation_Stack.svg';
+
 export default Ember.Component.extend({
 
+  //iconUrl,
   publicLink: computed('model.services.lastObject.endpointsMap', function(){
     let services = this.get('model.services').filterBy('publicEndpoints');
     let endpoints = services.get('lastObject.endpointsMap') || {};
@@ -22,5 +26,7 @@ export default Ember.Component.extend({
       let [ip] = ips;
       return constructUrl(false, ip, port);
     }
-  })
+  }),
+  access: Ember.inject.service(),
+  isAdmin: Ember.computed.alias('access.admin')
 });
