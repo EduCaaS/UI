@@ -64,7 +64,7 @@ export default Ember.Component.extend(NewOrEdit, {
     this.set('selectedTemplateModel', null);
 
     Ember.run.scheduleOnce('afterRender', () => {
-      if ( this.get('selectedTemplateUrl') === 'default') {
+      if ( this.get('selectedTemplateUrl') ) {
         this.templateChanged();
       } else {
         var def = this.get('templateResource.defaultVersion');
@@ -94,25 +94,38 @@ export default Ember.Component.extend(NewOrEdit, {
     });
 
     let def = this.get('templateResource.defaultVersion');
-    if ( this.get('showDefaultVersionOption') && def ) {
+    if ( this.get('showDefaultVersionOption') && this.get('defaultUrl') ) {
       out.unshift({version:  this.get('intl').t('newCatalog.version.default', {version: def}), link: 'default'});
     }
 
     return out;
   }.property('versionsArray','templateResource.defaultVersion'),
 
+  defaultUrl: function() {
+    var defaultVersion = this.get('templateResource.defaultVersion');
+    var versionLinks = this.get('versionLinks');
+
+    if ( defaultVersion && versionLinks && versionLinks[defaultVersion] ) {
+      return versionLinks[defaultVersion];
+    }
+
+    return null;
+  }.property('templateResource.defaultVersion','versionLinks'),
+
   templateChanged: function() {
     var url = this.get('selectedTemplateUrl');
+
+    if ( url === 'default' ) {
+      let defaultUrl = this.get('defaultUrl');
+      if ( defaultUrl ) {
+        url = defaultUrl;
+      } else {
+        url = null;
+      }
+    }
+
     if (url) {
       this.set('loading', true);
-
-      if ( url === 'default' ) {
-        var def = this.get('templateResource.defaultVersion');
-        var links = this.get('versionLinks');
-        if ( def && links ) {
-          url = links[def];
-        }
-      }
 
       var version = this.get('settings.rancherVersion');
       if ( version ) {

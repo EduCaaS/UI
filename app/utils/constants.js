@@ -21,6 +21,7 @@ var C = {
       "label": "action.stop",
       "icon": "icon icon-stop",
       "action": "promptStop",
+      "altAction": "stop",
       "bulkActionName": "Stop",
     },
     {
@@ -33,6 +34,7 @@ var C = {
       "label": "action.remove",
       "icon": "icon icon-trash",
       "action": "promptDelete",
+      "altAction": "delete",
       "bulkActionName": "Delete",
     },
   ],
@@ -152,7 +154,7 @@ var C = {
     DOCKER_VERSION: 'io.rancher.host.docker_version',
     KERNEL_VERSION: 'io.rancher.host.linux_kernel_version',
     KVM: 'io.rancher.host.kvm',
-    SCHED_IPS: 'io.rancher.host.ip_set',
+    SCHED_IPS: 'io.rancher.scheduler.ips',
 
     // Kubernetes
     K8S_DASHBOARD: 'io.rancher.k8s.kubernetes-dashboard',
@@ -419,6 +421,7 @@ C.SUPPORTED_SCHEMA_INPUTS= [
   'service',
   'string',
   'masked',
+  'secret',
 ];
 
 
