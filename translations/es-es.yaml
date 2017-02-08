@@ -828,7 +828,7 @@ k8sTab:
 
 loginPage:
   greeting: "¡Hola!<br>Entra en {appName}"
-  githubMessage: "{appName} usa GitHub para gestionar usuarios y equipos. Si no tienes una cuenta te la puedees crear haciendo click en el botón."
+  githubMessage: "{appName} usa GitHub para gestionar usuarios y equipos. Si no tienes una cuenta puedes crear una haciendo click en el botón."
   shibbolethMessage: "{appName} uses Shibboleth to manage accounts.  Click the button below to log in to the configured Shibboleth IDP."
   shibbolethError:
     401: "Unauthorized"
