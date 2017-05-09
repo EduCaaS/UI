@@ -86,7 +86,7 @@ module.exports = function(environment) {
       // when it is created
       version: pkg.version,
       appName: 'EduCaaS', // EduCaaS name
-      apiServer: 'https://wip.educaas.io', // EduCaaS API endpoint
+      apiServer: 'https://panel.educaas.io', // EduCaaS API endpoint
       legacyApiEndpoint: '/v1',
       apiEndpoint: '/v2-beta',
       catalogServer: '',
