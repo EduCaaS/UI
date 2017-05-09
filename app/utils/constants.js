@@ -38,6 +38,20 @@ var C = {
       "bulkActionName": "Delete",
     },
   ],
+
+  CAPABILITY: {
+    NETWORK_POLICIES: 'network-policy-manager',
+    SECRETS: 'secrets',
+  },
+
+  CATALOG: {
+    LIBRARY_KEY: 'library',
+    LIBRARY_VALUE: 'https://git.rancher.io/rancher-catalog.git',
+    COMMUNITY_KEY: 'community',
+    COMMUNITY_VALUE: 'https://git.rancher.io/community-catalog.git',
+    DEFAULT_BRANCH: 'master',
+  },
+
   COOKIE: {
     TOKEN: 'token',
     PL: 'PL',
@@ -86,14 +100,6 @@ var C = {
     CATALOG_DEFAULT_GROUP: 'library',
   },
 
-  CATALOG: {
-    LIBRARY_KEY: 'library',
-    LIBRARY_VALUE: 'https://git.rancher.io/rancher-catalog.git',
-    COMMUNITY_KEY: 'community',
-    COMMUNITY_VALUE: 'https://git.rancher.io/community-catalog.git',
-    DEFAULT_BRANCH: 'master',
-  },
-
   GITHUB: {
     DEFAULT_HOSTNAME: 'github.com',
     AUTH_PATH: '/login/oauth/authorize',
@@ -108,6 +114,7 @@ var C = {
     CSRF: 'X-Api-Csrf',
     NO_CHALLENGE: 'X-Api-No-Challenge',
     NO_CHALLENGE_VALUE: 'true',
+    PROJECT_ID: 'X-Api-Project-Id',
     RANCHER_VERSION: 'X-Rancher-Version',
   },
 
@@ -155,6 +162,7 @@ var C = {
     KERNEL_VERSION: 'io.rancher.host.linux_kernel_version',
     KVM: 'io.rancher.host.kvm',
     SCHED_IPS: 'io.rancher.scheduler.ips',
+    REQUIRE_ANY: 'io.rancher.scheduler.require_any',
 
     // Kubernetes
     K8S_DASHBOARD: 'io.rancher.k8s.kubernetes-dashboard',
@@ -229,6 +237,11 @@ var C = {
 
     ROLE_MEMBER:  'member',
     ROLE_OWNER:   'owner',
+
+    SUPPORTS_NETWORK_POLICY: [
+      'ipsec',
+      'vxlan',
+    ]
   },
 
   PROJECT_TEMPLATE: {
@@ -288,6 +301,7 @@ var C = {
     BALANCER_IMAGE:            'lb$instance$image',
     PROJECT_VERSION:           'account$version',
     FEEDBACK_FORM:             'ui$feedback$form',
+    SHOW_CUSTOM_HOST:          'ui$show$custom$host',
   },
 
   USER: {
@@ -364,6 +378,7 @@ C.SYSTEM_LABELS_WITH_CONTROL = [
   C.LABEL.START_ONCE,
   C.LABEL.REQUESTED_IP,
   C.LABEL.PULL_IMAGE,
+  C.LABEL.REQUIRE_ANY,
   C.LABEL.SCHED_IPS,
   C.LABEL.AGENT_IMAGE,
   C.LABEL.DOCKER_VERSION,

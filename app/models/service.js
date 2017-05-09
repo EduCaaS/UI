@@ -151,8 +151,8 @@ var Service = Resource.extend({
     var choices = [
       { label: 'action.start',          icon: 'icon icon-play',             action: 'activate',       enabled: !!a.activate},
       { label: 'action.finishUpgrade',  icon: 'icon icon-success',          action: 'finishUpgrade',  enabled: !!a.finishupgrade },
-      { label: 'action.rollback',       icon: 'icon icon-history',          action: 'rollback',       enabled: !!a.rollback },
       { label: (isBalancer ? 'action.upgradeOrEdit' : 'action.upgrade'),        icon: 'icon icon-arrow-circle-up',  action: 'upgrade',        enabled: canUpgrade },
+      { label: 'action.rollback',       icon: 'icon icon-history',          action: 'rollback',       enabled: !!a.rollback },
       { label: 'action.cancelUpgrade',  icon: 'icon icon-life-ring',        action: 'cancelUpgrade',  enabled: !!a.cancelupgrade },
       { label: 'action.cancelRollback', icon: 'icon icon-life-ring',        action: 'cancelRollback', enabled: !!a.cancelrollback },
       { divider: true },
@@ -207,20 +207,6 @@ var Service = Resource.extend({
     return out.sortBy('name');
   }.property('linkedServices'),
 
-  // Only for old Load Balancer to get ports map
-  consumedServicesWithNamesAndPorts: function() {
-    let store = this.get('store');
-    return store.all('serviceconsumemap').filterBy('serviceId', this.get('id')).map((map) => {
-      return Ember.Object.create({
-        name: map.get('name'),
-        service: store.getById('service', map.get('consumedServiceId')),
-        ports: map.get('ports')||[],
-      });
-    }).filter((obj) => {
-      return obj && obj.get('service.id');
-    });
-  }.property('id','state').volatile(),
-
   combinedState: function() {
     var service = this.get('state');
     var health = this.get('healthState');
@@ -270,6 +256,7 @@ var Service = Resource.extend({
   isReal: function() {
     return [
       'service',
+      'scalinggroup',
       'networkdriverservice',
       'storagedriverservice',
       'loadbalancerservice',
@@ -310,7 +297,8 @@ var Service = Resource.extend({
       'composeservice',
       'networkdriverservice',
       'storagedriverservice',
-      'service'
+      'service',
+      'scalinggroup'
     ];
 
     let type = this.get('type').toLowerCase();

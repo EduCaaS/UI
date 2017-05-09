@@ -59,6 +59,8 @@ export default Ember.Component.extend({
   // Inputs
   initialStr:           null,
   initialMap:           null,
+  kvSeparator:          '=',
+  requiredIfAny:        null,
   addActionLabel:       'formKeyValue.addAction',
   keyLabel:             'formKeyValue.key.label',
   valueLabel:           'formKeyValue.value.label',
@@ -72,7 +74,15 @@ export default Ember.Component.extend({
 
   actions: {
     add() {
-      this.get('ary').pushObject(Ember.Object.create({key: '', value: ''}));
+      let ary = this.get('ary');
+      let required = this.get('requiredIfAny');
+      if ( required && !ary.get('length') ) {
+        Object.keys(required).forEach((k) => {
+          ary.pushObject(Ember.Object.create({key: k, value: required[k], editable: false}));
+        });
+      }
+
+      ary.pushObject(Ember.Object.create({key: '', value: ''}));
       Ember.run.next(() => {
         if ( this.isDestroyed || this.isDestroying ) {
           return;
@@ -116,7 +126,7 @@ export default Ember.Component.extend({
     else if ( this.get('initialStr') )
     {
       var lines = this.get('initialStr').split(',');
-      applyLinesIntoArray(lines, ary);
+      applyLinesIntoArray(lines, ary, this.get('kvSeparator'));
       removeEmptyEntries(ary, this.get('allowEmptyValue'));
     }
 
@@ -136,7 +146,8 @@ export default Ember.Component.extend({
       return;
     }
 
-    var out = {};
+    var map = {};
+    var str = '';
 
     this.get('ary').forEach((row) => {
       var k = row.get('key').trim();
@@ -144,10 +155,12 @@ export default Ember.Component.extend({
 
       if ( k && (v || this.get('allowEmptyValue')) )
       {
-        out[row.get('key').trim()] = row.get('value').trim();
+        map[k] = v;
+        str += (str ? ', ' : '') + k + (v ? this.get('kvSeparator') + v : '');
       }
     });
 
-    this.sendAction('changed', out);
+    this.sendAction('changed', map);
+    this.sendAction('changedStr', str);
   },
 });

@@ -31,10 +31,12 @@ export default Resource.extend({
     }
   }.property('catalogTemplate'),
 
-  category: function() {
+  categories: function() {
     let tpl = this.get('catalogTemplate');
     if ( tpl ) {
-      return tpl.get('category');
+      return tpl.get('categories')||[];
     }
-  }.property('catalogTemplate'),
+
+    return [];
+  }.property('catalogTemplate.categories'),
 });
