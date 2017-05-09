@@ -82,32 +82,35 @@ export default Ember.Route.extend({
 
     logout(transition, timedOut, errorMsg) {
       let session = this.get('session');
+      let access = this.get('access');
 
-      session.set(C.SESSION.ACCOUNT_ID,null);
+      access.clearToken().finally(() => {
+        session.set(C.SESSION.ACCOUNT_ID,null);
 
-      this.get('tab-session').clear();
+        this.get('tab-session').clear();
 
-      this.get('access').clearSessionKeys();
+        access.clearSessionKeys();
 
-      if ( transition ) {
-        session.set(C.SESSION.BACK_TO, window.location.href);
-      }
+        if ( transition && !session.get(C.SESSION.BACK_TO) ) {
+          session.set(C.SESSION.BACK_TO, window.location.href);
+        }
 
-      if ( this.get('modal.modalVisible') ) {
-        this.get('modal').toggleModal();
-      }
+        if ( this.get('modal.modalVisible') ) {
+          this.get('modal').toggleModal();
+        }
 
-      let params = {queryParams: {}};
+        let params = {queryParams: {}};
 
-      if ( timedOut ) {
-        params.queryParams.timedOut = true;
-      }
+        if ( timedOut ) {
+          params.queryParams.timedOut = true;
+        }
 
-      if ( errorMsg ) {
-        params.queryParams.errorMsg = errorMsg;
-      }
+        if ( errorMsg ) {
+          params.queryParams.errorMsg = errorMsg;
+        }
 
-      this.transitionTo('login', params);
+        this.transitionTo('login', params);
+      });
     },
 
     langToggle() {
@@ -145,6 +148,22 @@ export default Ember.Route.extend({
     let stateMsg = 'Authorization state did not match, please try again.';
 
     this.get('language').initLanguage();
+
+    transition.finally(() => {
+      this.controllerFor('application').setProperties({
+        state: null,
+        code: null,
+        error_description: null,
+        redirectTo: null,
+      });
+    });
+
+    if ( params.redirectTo ) {
+      let path = params.redirectTo;
+      if ( path.substr(0,1) === '/' ) {
+        this.get('session').set(C.SESSION.BACK_TO, path);
+      }
+    }
 
     if (params.isPopup) {
       this.controllerFor('application').set('isPopup', true);
@@ -221,10 +240,4 @@ export default Ember.Route.extend({
     // Find out if auth is enabled
     return this.get('access').detect();
   },
-
-  setupController(controller/*, model*/) {
-    controller.set('code',null);
-    controller.set('state',null);
-    controller.set('error_description',null);
-  }
 });

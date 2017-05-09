@@ -13,12 +13,14 @@ const ALLOWED = {
   'audit_log.purge.after.seconds': {description: 'Auto-purge Audit Log entries after this long (seconds)', kind: 'int'},
   'catalog.refresh.interval.seconds': {description: 'Refresh Catalog git repos after this long (seconds)', kind: 'int'},
   'container.event.max.size': {description: 'Maximum number of outstanding container events allowed per host before dropping events', kind: 'int'},
+  'db.maxidle': {description: 'Database pool: maximum idle connections (requires restart)', kind: 'int'},
+  'db.maxtotal': {description: 'Database pool: maximum total connections (requires restart)', kind: 'int'},
+  'db.prep.stmt.cache.size': {description: 'Database pool: Prepared statement cache size (per connection; requires restart)', kind: 'int'},
   'events.purge.after.seconds': {description: 'Auto-purge Event entries after this long (seconds)', kind: 'int'},
-  'global.pool.maxidle': {description: 'Database pool: maximum idle connections', kind: 'int'},
-  'global.pool.maxtotal': {description: 'Database pool: maximum total connections', kind: 'int'},
-  'graphite.host': {description: 'Graphite: Server hostname or IP (must restart server container(s) after changing)'},
+  'graphite.host': {description: 'Graphite: Server hostname or IP (requires restart)'},
   'graphite.options': {description: 'Graphite: Additional options'},
   'graphite.port': {description: 'Graphite: Server port', kind: 'int'},
+  'host.remove.delay.seconds': {description: 'Automatically remove hosts that are disconnected for more than this long (seconds)', kind: 'int'},
   'lb.instance.image': {description: 'Default docker image for Load Balancer Services'},
   'main_tables.purge.after.seconds': {description: 'Auto-purge deleted entries from most tables after this long (seconds)', kind: 'int'},
   'newest.docker.version': {description: 'The newest supported version of Docker at the time of this release.  A Docker version that does not satisfy supported.docker.range but is newer than this will be marked as untested'},
@@ -28,6 +30,8 @@ const ALLOWED = {
   'service_log.purge.after.seconds': {description: 'Auto-purge Service Log entries after this long (seconds)', kind: 'int'},
   'supported.docker.range': {description: 'Semver range for suported Docker engine versions.  Versions which do not satisfy this range will be marked unsupported in the UI'},
   'ui.pl': {description: 'Private-Label company name'},
+  'ui.show.custom.host': {description: 'Show the Custom host option on the Add Host screen', kind: 'boolean'},
+  'upgrade.manager': {description: 'Automatic upgrades of infrastructure stacks', kind: 'boolean'},
 };
 
 export default Ember.Component.extend({

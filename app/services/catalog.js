@@ -2,17 +2,17 @@ import Ember from 'ember';
 import { addQueryParams, uniqKeys } from 'ui/utils/util';
 import C from 'ui/utils/constants';
 
-const MIN_VERSION = 'minimumRancherVersion_lte';
-const MAX_VERSION = 'maximumRancherVersion_gte';
+const RANCHER_VERSION = 'rancherVersion';
 
 export default Ember.Service.extend({
-  settings: Ember.inject.service(),
-  store: Ember.inject.service('store'),
-  userStore: Ember.inject.service('user-store'),
-  projects : Ember.inject.service(),
+  settings:                   Ember.inject.service(),
+  store:                      Ember.inject.service('store'),
+  userStore:                  Ember.inject.service('user-store'),
+  projects:                   Ember.inject.service(),
 
-  templateCache    : null,
-  catalogs         : null,
+  templateCache:              null,
+  catalogs:                   null,
+  componentRequestingRefresh: false, // this is only present to deal with modals. this can be observed to issue a refresh command
 
   templateBase: Ember.computed('projects.current.orchestration', function() {
     return this.get('projects.current.orchestration') || 'cattle';
@@ -36,8 +36,9 @@ export default Ember.Service.extend({
     });
   },
 
-  fetchCatalogs() {
-    return this.get('store').request({url: `${this.get('app.catalogEndpoint')}/catalogs`});
+  fetchCatalogs(opts) {
+    var neu = $.extend({}, {url: `${this.get('app.catalogEndpoint')}/catalogs`}, opts||{});
+    return this.get('store').request(neu);
   },
 
   getTemplateFromCache(id) {
@@ -87,7 +88,7 @@ export default Ember.Service.extend({
     }
 
     let url = this._addLimits(`${this.get('app.catalogEndpoint')}/templates`, qp);
-    return this.get('store').request({url: url}).then((res) => {
+    return this.get('store').request({url: url, headers: {[C.HEADER.PROJECT_ID]: this.get('projects.current.id')},}).then((res) => {
       res.catalogId = catalogId;
       this.set('templateCache', res);
       return this.filter(res, params.category, templateBase, plusInfra);
@@ -115,11 +116,13 @@ export default Ember.Service.extend({
       bases.push(C.EXTERNAL_ID.KIND_INFRA);
     }
 
-    let categories = uniqKeys(data, 'category');
+    let categories = [];
+    data.forEach((obj) => { categories.pushObjects(obj.get('categoryArray')); });
+    categories = uniqKeys(categories);
     categories.unshift('all');
 
     data = data.filter((tpl) => {
-      if ( category !== 'all' && (tpl.get('category')||'').toLowerCase() !== category ) {
+      if ( category !== 'all' && !tpl.get('categoryLowerArray').includes(category) ) {
         return false;
       }
 
@@ -144,8 +147,7 @@ export default Ember.Service.extend({
     qp = qp || {};
 
     if (version) {
-      qp[MIN_VERSION] = version;
-      qp[MAX_VERSION] = version;
+      qp[RANCHER_VERSION] = version;
     }
 
     url = addQueryParams(url, qp);

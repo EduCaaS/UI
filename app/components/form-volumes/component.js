@@ -218,19 +218,20 @@ export default Ember.Component.extend({
 
   validate: function() {
     var errors = [];
+    var volumeDriver = this.get('instance.volumeDriver');
 
     this.get('volumesArray').forEach((row) => {
       let val = row.value;
-      if ( val.substr(0,1) === '/' ) {
+      if ( val.substr(0,1) === '/' || !Ember.isEmpty(volumeDriver)) {
         return;
       }
 
       val = val.replace(/:.*/,'');
-      if ( val.match(/[^a-z0-9._-]/i) ) {
+      if ( val.match(/[^a-z0-9._@-]/i) ) {
         errors.push(this.get('intl').t('formVolumes.errors.invalidName'));
       }
     });
 
     this.set('errors', errors.uniq());
-  }.observes('volumesArray.@each.value'),
+  }.observes('volumesArray.@each.value', 'instance.volumeDriver'),
 });
