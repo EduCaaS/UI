@@ -10,13 +10,13 @@ const {
   constructUrl
 } = Util;
 
-//const iconUrl = 'https://upload.wikimedia.org/wikipedia/commons/a/a6/AWS_Simple_Icons_Deployment_Management_AWS_CloudFormation_Stack.svg';
+const iconUrl = 'https://upload.wikimedia.org/wikipedia/commons/a/a6/AWS_Simple_Icons_Deployment_Management_AWS_CloudFormation_Stack.svg';
 
 export default Ember.Component.extend({
 
   access: Ember.inject.service(),
 
-  //iconUrl,
+  iconUrl,
 
   publicLink: computed('model.services.lastObject.endpointsMap', function(){
     let services = this.get('model.services').filterBy('publicEndpoints');
