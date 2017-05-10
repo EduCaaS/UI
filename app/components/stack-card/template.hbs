@@ -1,11 +1,10 @@
 {{! Stack Card template. Component added by EduCaaS}}
 <div class="container-stack-card text-center">
   <div class="stack-card-icon">
-    {{!-- Implements a generic icon --}}
     {{#if publicLink}}
-      <a href={{publicLink}} target="_blank"><img src={{model.urlImage}} /></a>
+        <a href={{publicLink}} target="_blank"><img src={{model.urlImage}} /></a>
     {{else}}
-      <img src={{model.urlImage}} />
+        <img src={{model.urlImage}} />
     {{/if}}
   </div>
   <div class="itemwrap">

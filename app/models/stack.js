@@ -223,15 +223,27 @@ var Stack = Resource.extend({
       return C.EXTERNAL_ID.KIND_USER;
     }
   }.property('externalIdInfo.kind','group','system'),
+
   // FIXMe
   // EduCaaS modification in order to set catalog icon as stack card icon.
   // I do not have control about what is in the backend. This is the best I can
-  // do with the data I have.
+  // do with the data I have. Setting urlImage function wiht a conditional statement
+  // to avoid error when adding custom stacks
+  //
+
   urlImage: function() {
-    let baseUrl = `${this.get('app.catalogEndpoint')}/templates/`;
-    let catalogRef = this.get('externalId').split('//')[1].split(':', 2).join(':');
-    return `${baseUrl}${catalogRef}?image`;
+    if (this.get('externalId').split('//').length > 1)
+      {
+        let baseUrl = `${this.get('app.catalogEndpoint')}/templates/`;
+        let catalogRef = this.get('externalId').split('//')[1].split(':', 2).join(':');
+        return `${baseUrl}${catalogRef}?image`;
+      }
+    else
+      {
+        return '/v1-catalog/templates/EduCaaS:canvas?image';
+      }
     }.property('externalId', 'app.catalogEndpoint'),
+
 
   tags: Ember.computed('group', {
     get() {
