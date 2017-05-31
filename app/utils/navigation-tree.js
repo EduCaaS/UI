@@ -1,6 +1,5 @@
 import Ember from 'ember';
 import C from 'ui/utils/constants';
-import { getCatalogNames } from 'ui/utils/parse-catalog-setting';
 import { tagChoices } from 'ui/models/stack';
 import { uniqKeys } from 'ui/utils/util';
 
@@ -442,7 +441,7 @@ function getStacksSubtree() {
 }
 
 function getCatalogSubtree() {
-  let repos = getCatalogNames(this.get(`settings.${C.SETTING.CATALOG_URL}`));
+  let repos = (this.get('catalog.catalogs')||[]).slice();
   let showAll = repos.length > 1;
 
   let out = [];
@@ -459,8 +458,9 @@ function getCatalogSubtree() {
     out.push({divider: true});
   }
 
-  if (repos.indexOf(C.CATALOG.LIBRARY_KEY) >= 0 ) {
-    repos.removeObject(C.CATALOG.LIBRARY_KEY);
+  let match = repos.findBy('id','library');
+  if ( match ) {
+    repos.removeObject(match);
     out.push({
       id: 'catalog-library',
       localizedLabel: 'nav.catalog.library',
@@ -471,8 +471,9 @@ function getCatalogSubtree() {
     });
   }
 
-  if (repos.indexOf(C.CATALOG.COMMUNITY_KEY) >= 0 ) {
-    repos.removeObject(C.CATALOG.COMMUNITY_KEY);
+  match = repos.findBy('id','community');
+  if ( match ) {
+    repos.removeObject(match);
     out.push({
       id: 'catalog-community',
       localizedLabel: 'nav.catalog.community',
@@ -489,12 +490,12 @@ function getCatalogSubtree() {
 
   repos.forEach((repo) => {
     out.push({
-      id: 'catalog-'+repo,
-      label: repo,
-      icon: 'icon icon-user',
+      id: 'catalog-'+repo.get('id'),
+      label: repo.get('name'),
+      icon: (repo.get('environmentId') === 'global' ? 'icon icon-users' : 'icon icon-user'),
       route: 'catalog-tab',
       ctx: [getProjectId],
-      queryParams: {catalogId: repo}
+      queryParams: {catalogId: repo.get('id')}
     });
   });
 
